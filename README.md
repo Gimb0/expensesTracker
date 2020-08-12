@@ -1,3 +1,1 @@
 # financeSite
-
-My Finance Site
