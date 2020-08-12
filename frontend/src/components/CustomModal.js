@@ -11,18 +11,12 @@ export default class CustomModal extends Component {
 	}
 	
     handleChange = e => {
-
-		console.log("e.target:")
-		console.log(e.target)
 		let { name, value } = e.target;
 		if(e.target.list) {
 			value = this.findCategoryID(value)
 		}
 		const activeItem = { ...this.state.activeItem, [name]: value };
 		this.setState({ activeItem });
-
-		console.log("activeItem:")
-		console.log(this.state.activeItem)
 	};
 
 	findCategoryID = category => {

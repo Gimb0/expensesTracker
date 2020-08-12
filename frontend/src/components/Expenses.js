@@ -59,7 +59,6 @@ export default class Expenses extends Component {
 	}
 
 	handleSubmit = item => {
-		console.log(item)
 		this.toggle();
 		if(item.id) {
 			axios
