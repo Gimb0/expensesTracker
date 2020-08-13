@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web:  python manage.py runserver 8080
+web:  python manage.py runserver 8080 && npm start
