@@ -7,7 +7,7 @@ import dj_database_url
 SECRET_KEY = '8&5ga9cdzy)+hna)e#$f6u#gf_4h8z#5n=a+gxyy70^=do3)bw'
 
 DEBUG = False
-ALLOWED_HOSTS = ['192.168.1.20:3000']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 # DATABASE CONFIGURATION
 POSTGRES_USER = 'brad'
