@@ -1,7 +1,10 @@
 from financeSite.settings.base import *
 import dj_database_url
+import django_heroku
 
 # Override base settings here
+django_heroku.settings(locals())
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '8&5ga9cdzy)+hna)e#$f6u#gf_4h8z#5n=a+gxyy70^=do3)bw'
