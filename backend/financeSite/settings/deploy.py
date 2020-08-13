@@ -12,7 +12,7 @@ DEBUG = False
 POSTGRES_USER = 'brad'
 POSTGRES_PASS = 'toor'
 POSTGRES_HOST = '192.168.1.20'
-POSTGRES_PORT = 5432
+POSTGRES_PORT = '5432'
 POSTGRES_DB = 'expenses'
 
 DATABASES = {'default': dj_database_url.config(default='postgres://' + POSTGRES_USER + ':' + POSTGRES_PASS + '@' + POSTGRES_HOST + ':' + POSTGRES_PORT + '/' + POSTGRES_DB)}
