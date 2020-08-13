@@ -18,4 +18,5 @@ ALLOWED_HOSTS = ['diligenc3-expenses-backend.herokuapp.com']
 
 # DATABASES = {'default': dj_database_url.config(default='postgres://' + POSTGRES_USER + ':' + POSTGRES_PASS + '@' + POSTGRES_HOST + ':' + POSTGRES_PORT + '/' + POSTGRES_DB)}
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
+DATABASES = {'default': dj_database_url.config(conn_max_age=600, ssl_require=True)}
