@@ -1,18 +1,23 @@
 import React, { Component } from "react";
 import axios from 'axios'
-import Modal from './CustomModal'
+import ExpenseModal from './ExpenseModal'
+import CategoryModal from './CategoryModal'
 
 export default class Expenses extends Component {
   	constructor(props) {
 		super(props);
         
         this.state = {
-            modal: false,
-            activeItem: {
+            expenseModal: false,
+            categoryModal: false,
+            activeExpense: {
                 id: 0,
                 expense: "",
                 amount: 0,
                 expenseDate: null,
+                category: ""
+            },
+            newCategory: {
                 category: ""
             },
             viewCategory: 0,
@@ -54,23 +59,41 @@ export default class Expenses extends Component {
 			.catch(err => { console.log(err); })
 	}
 
-	toggle = () => {
-		this.setState({ modal: !this.state.modal });
-	}
+	expenseToggle = () => {
+		this.setState({ expenseModal: !this.state.expenseModal });
+    }
+    
+    categoryToggle = () => {
+        this.setState({ categoryModal: !this.state.categoryModal })
+    }
 
-	handleSubmit = item => {
-		this.toggle();
+	handleExpenseSubmit = item => {
+        
+		this.expenseToggle();
 		if(item.id) {
 			axios
 				.put(`/api/spendings/expenses/${item.id}/`, item)
 				.then(res => this.refreshList());
 			return;
-		}
-		
-		axios
-			.post(`/api/spendings/expenses/`, item)
-			.then(res => this.refreshList());
-	}
+		} else {
+            axios
+                .post(`/api/spendings/expenses/`, item)
+                .then(res => this.refreshList());
+        }
+    }
+    
+    handleCategorySubmit = category => {
+        this.categoryToggle();
+        if(category.id) {
+            axios
+                .put(`/api/spendings/categories/${category.id}`, category)
+                .then(res => this.refreshList());
+        } else {
+            axios
+                .post(`/api/spendings/categories/`, category)
+                .then(res => this.refreshList());
+        }
+    }
 
 	handleDelete = item => {
 		axios
@@ -80,11 +103,16 @@ export default class Expenses extends Component {
 
 	createExpense = () => {
 		const expense = { expense: "", amount: 0, category: ""};
-		this.setState({ modal: !this.state.modal, activeItem: expense})
-	}
+		this.setState({ expenseModal: !this.state.expenseModal, activeItem: expense})
+    }
+    
+    createCategory = () => {
+        const category = { category: "" };
+        this.setState({ categoryModal: !this.state.categoryModal, newCategory: category })
+    }
 
 	editExpense = expense => {
-		this.setState({ modal: !this.state.modal, activeItem: expense })
+		this.setState({ expenseModal: !this.state.expenseModal, activeItem: expense })
 	}
 
 	displayCategory = category => {
@@ -135,7 +163,8 @@ export default class Expenses extends Component {
 				<div className="col-md-6 col-sm-10 mx-auto p-0">
 					<div className="card p-3">
 					<div>
-						<button onClick={this.createExpense} className="btn btn-primary">Add Expense</button>
+						<button onClick={this.createExpense} className="btn btn-primary mr-2">Add Expense</button>
+                        <button onClick={this.createCategory} className="btn btn-primary">Add Category</button>
 					</div>
 					<div className='my-5 tab-list'>
 						{this.renderTabList()}
@@ -146,14 +175,22 @@ export default class Expenses extends Component {
 					</div>
 				</div>
 				</div>
-				{this.state.modal ? (
-					<Modal
+				{ this.state.expenseModal ? (
+					<ExpenseModal
 						activeItem={this.state.activeItem}
 						categories={this.state.categoriesList}
-						toggle={this.toggle}
-						onSave={this.handleSubmit}
+						toggle={this.expenseToggle}
+						onSave={this.handleExpenseSubmit}
 					/>
-				) : null}
+				) : null }
+                { this.state.categoryModal ? (
+                    <CategoryModal
+                        newCategory={this.state.newCategory} 
+                        categories={this.state.categoriesList}
+                        toggle={this.categoryToggle}
+                        onSave={this.handleCategorySubmit}
+                    />
+                ) : null }
 			</main>
 		);
   	}

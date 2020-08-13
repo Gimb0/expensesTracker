@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label, InputGroupAddon, InputGroupText, InputGroup, Col, Row } from "reactstrap";
 
-export default class CustomModal extends Component {
+export default class ExpenseModal extends Component {
     constructor(props) {
     	super(props);
 		this.state = {
+			error: false,
 			activeItem: this.props.activeItem,
 			categories: this.props.categories
 		};
@@ -13,7 +14,10 @@ export default class CustomModal extends Component {
     handleChange = e => {
 		let { name, value } = e.target;
 		if(e.target.list) {
-			value = this.findCategoryID(value)
+			if(this.checkCategoryExists(value)) {
+				value = this.findCategoryID(value);
+				console.log("category exists")
+			}
 		}
 		const activeItem = { ...this.state.activeItem, [name]: value };
 		this.setState({ activeItem });
@@ -31,8 +35,37 @@ export default class CustomModal extends Component {
 				return cat.category;
 	}
 
+	checkCategoryExists = category => {
+		for(var cat of this.state.categories) {
+			if(category === cat.category)
+				return true;
+		}
+
+		return false;
+	}
+
+	verifyExpense = () => {
+		if(this.checkCategoryExists(this.findCategory(this.state.activeItem.category)))
+			this.props.onSave(this.state.activeItem)
+		else {
+			this.setState({
+				error: true
+			})
+		}
+	}
+
 	render() {
-		const { toggle, onSave } = this.props;
+		const { toggle } = this.props;
+		var displayError = null;
+		if(this.state.error) {
+			displayError = (
+				<p style={{color: 'red'}}>
+					Category does not exist!
+					Please create the category first.	
+				</p>
+			)
+		}
+
 		return (
 			<Modal isOpen={true} toggle={toggle}>
 			<ModalHeader toggle={toggle}> Expense </ModalHeader>
@@ -92,12 +125,12 @@ export default class CustomModal extends Component {
 							<option key={key} value={item.category} />
 						)}
 					</datalist>
-					
 				</FormGroup>
+				{ displayError }
 				</Form>
 			</ModalBody>
 			<ModalFooter>
-				<Button color="success" onClick={() => onSave(this.state.activeItem)}>
+				<Button color="success" onClick={this.verifyExpense}>
 					Save
 				</Button>
 			</ModalFooter>
