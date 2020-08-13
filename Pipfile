@@ -6,9 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "*"
-djangorestframework = "*"
-django-cors-headers = "*"
-dj-database-url = "*"
+django = "3.1"
+djangorestframework = "3.11.1"
+django-cors-headers = "3.4.1"
+dj-database-url = "0.5.0"
 pyscopg2-binary = "2.8.5"
 pyscopg2 = "2.8.5"
