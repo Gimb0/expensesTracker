@@ -7,7 +7,7 @@ import dj_database_url
 SECRET_KEY = '8&5ga9cdzy)+hna)e#$f6u#gf_4h8z#5n=a+gxyy70^=do3)bw'
 
 DEBUG = False
-ALLOWED_HOSTS = ['https://diligenc3-expenses-backend.herokuapp.com']
+ALLOWED_HOSTS = ['diligenc3-expenses-backend.herokuapp.com']
 
 # # DATABASE CONFIGURATION
 # POSTGRES_USER = 'rbipyotetubsxp'
@@ -18,4 +18,4 @@ ALLOWED_HOSTS = ['https://diligenc3-expenses-backend.herokuapp.com']
 
 # DATABASES = {'default': dj_database_url.config(default='postgres://' + POSTGRES_USER + ':' + POSTGRES_PASS + '@' + POSTGRES_HOST + ':' + POSTGRES_PORT + '/' + POSTGRES_DB)}
 
-DATABASES = {'default': dj_database_url.config(default=os.envrion["DATABASE_URL"])}
+DATABASES = {'default': dj_database_url.config(default=os.environ["DATABASE_URL"])}
