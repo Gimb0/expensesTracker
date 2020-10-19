@@ -73,25 +73,29 @@ export default class Expenses extends Component {
 		if(item.id) {
 			axios
 				.put(`/api/spendings/expenses/${item.id}/`, item)
-				.then(res => this.refreshList());
-			return;
+				.then(res => this.refreshList())
+				.catch(console.log);
 		} else {
             axios
                 .post(`/api/spendings/expenses/`, item)
-                .then(res => this.refreshList());
+				.then(res => this.refreshList())
+				.catch(console.log);
         }
     }
     
     handleCategorySubmit = category => {
+		console.log("Handle Category Submit");
         this.categoryToggle();
         if(category.id) {
             axios
                 .put(`/api/spendings/categories/${category.id}`, category)
-                .then(res => this.refreshList());
+				.then(res => this.refreshList())
+				.catch(console.log)
         } else {
             axios
                 .post(`/api/spendings/categories/`, category)
-                .then(res => this.refreshList());
+				.then(res => this.refreshList())
+				.catch(console.log)
         }
     }
 

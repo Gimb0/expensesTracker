@@ -39,6 +39,7 @@ export default class ExpenseModal extends Component {
 
 	render() {
 		const { toggle, onSave } = this.props;
+
 		return (
 			<Modal isOpen={true} toggle={toggle}>
 			<ModalHeader toggle={toggle}> New Category </ModalHeader>
