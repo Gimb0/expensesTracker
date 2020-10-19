@@ -5,11 +5,11 @@ services:
     volumes:
       - ./backend:/app/backend
     ports:
-      - "8000:8000"
+      - "8000"
     environment:
-      - DJANGO_SETTINGS_MODULE=finaceSite.settings.dev
-    stdin_open: true
-    tty: true
+      - DJANGO_SETTINGS_MODULE=financeSite.settings.dev
+    # stdin_open: true
+    # tty: true
     command: python3 manage.py runserver 0.0.0.0:8000
   frontend:
     stdin_open: true
