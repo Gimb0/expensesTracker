@@ -10,7 +10,7 @@ class Categories(models.Model):
         return self.category
 
 class Expenses(models.Model):
-    expense = models.CharField(max_length=50)
+    expense = models.CharField(max_length=128)
     amount = models.DecimalField(max_digits=9, decimal_places=2)
     date = models.DateField()
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
@@ -19,4 +19,4 @@ class Expenses(models.Model):
         return self.date >= timezone.make_aware(timezone.now, timezone=None, is_dst=False) - datetime.timedelta(days=1)
 
     def __str__(self):
-        return str(self.date)+": "+self.expense
+        return str(self.date) + ": " + self.expense
