@@ -1,5 +1,4 @@
 from financeSite.settings.base import *
-import dj_database_url
 
 # Override base settings here
 
@@ -7,13 +6,21 @@ import dj_database_url
 SECRET_KEY = '8&5ga9cdzy)+hna)e#$f6u#gf_4h8z#5n=a+gxyy70^=do3)bw'
 
 DEBUG = False
-ALLOWED_HOSTS = ['https://diligenc3-expenses-backend.herokuapp.com', 'localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
-# DATABASE CONFIGURATION
-POSTGRES_USER = 'brad'
-POSTGRES_PASS = 'toor'
-POSTGRES_HOST = '192.168.1.20'
-POSTGRES_PORT = '5432'
-POSTGRES_DB = 'expenses'
-
-DATABASES = {'default': dj_database_url.config(default='postgres://' + POSTGRES_USER + ':' + POSTGRES_PASS + '@' + POSTGRES_HOST + ':' + POSTGRES_PORT + '/' + POSTGRES_DB)}
+DATABASES = {
+    # 'postgresDB': { # Requires postgresql client dependencies
+    #     'NAME': 'expenses',
+    #     'HOST': '192.168.1.20',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'USER': 'brad',
+    #     'PASS': 'toor'
+    # },
+    'default': { # Requires mysql client dependencies
+        'NAME': 'expenses',
+        'HOST': '192.168.1.30',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'gimbo',
+        'PASSWORD': 'toor'
+    }
+}
