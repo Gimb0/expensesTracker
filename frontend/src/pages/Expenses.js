@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios'
-import ExpenseModal from './ExpenseModal'
-import CategoryModal from './CategoryModal'
+
+import ExpenseModal from '../components/ExpenseModal'
+import CategoryModal from '../components/CategoryModal'
 
 export default class Expenses extends Component {
   	constructor(props) {
@@ -162,8 +163,7 @@ export default class Expenses extends Component {
 	render() {
 		return (
 			<main className="content">
-				<h1 className="text-white text-uppercase text-center my-4">Finance Site - Expenses</h1>
-				<div className="row ">
+				<h1 className="text-white text-uppercase text-center my-4">Expenses</h1>
 				<div className="col-md-6 col-sm-10 mx-auto p-0">
 					<div className="card p-3">
 					<div>
@@ -177,7 +177,6 @@ export default class Expenses extends Component {
 						{this.renderItems()}
 					</ul>
 					</div>
-				</div>
 				</div>
 				{ this.state.expenseModal ? (
 					<ExpenseModal
