@@ -12,4 +12,4 @@ This project is being developed to provide everyday finance tools you might need
 - Python
   - Django
 - React
-- Reactstrap
+  - Reactstrap
