@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import ExpenseModal from '../components/ExpenseModal'
 import CategoryModal from '../components/CategoryModal'
+import Auth from "../components/Auth";
 
 export default class Expenses extends Component {
   	constructor(props) {
@@ -33,7 +34,7 @@ export default class Expenses extends Component {
 
 	refreshList = () => {
 		axios
-			.get('/api/spendings/expenses/')
+			.get('/api/spendings/expenses/', {'headers': {'Authorization': 'JWT ' + localStorage.getItem('JWT-Access')}})
 			.then(resp => {
 				resp.data.sort(function(a, b) {
 					var keyA = a.date;
@@ -43,10 +44,12 @@ export default class Expenses extends Component {
 				})
 				this.setState({ expensesList: resp.data }) 
 			})
-			.catch(err => { console.log(err); })
+			.catch(err => {
+				this.updateAccessToken()
+			})
 
 		axios
-			.get('/api/spendings/categories/')
+			.get('/api/spendings/categories/', {'headers': {'Authorization': 'JWT ' + localStorage.getItem('JWT-Access')}})
 			.then(resp => { 
 				resp.data.sort(function(a, b) {
 					var keyA = a.category;
@@ -57,7 +60,9 @@ export default class Expenses extends Component {
 				resp.data.unshift({id: 0, category: "All"})
 				this.setState({ categoriesList: resp.data })
 			})
-			.catch(err => { console.log(err); })
+			.catch(err => {
+				this.updateAccessToken()
+			})
 	}
 
 	expenseToggle = () => {
@@ -73,14 +78,18 @@ export default class Expenses extends Component {
 		this.expenseToggle();
 		if(item.id) {
 			axios
-				.put(`/api/spendings/expenses/${item.id}/`, item)
+				.put(`/api/spendings/expenses/${item.id}/`, item, {'headers': {'Authorization': 'JWT ' + localStorage.getItem('JWT-Access')}})
 				.then(res => this.refreshList())
-				.catch(console.log);
+				.catch(err => {
+					this.updateAccessToken()
+				})
 		} else {
             axios
-                .post(`/api/spendings/expenses/`, item)
+                .post(`/api/spendings/expenses/`, item, {'headers': {'Authorization': 'JWT ' + localStorage.getItem('JWT-Access')}})
 				.then(res => this.refreshList())
-				.catch(console.log);
+				.catch(err => {
+					this.updateAccessToken()
+				})
         }
     }
     
@@ -89,21 +98,34 @@ export default class Expenses extends Component {
         this.categoryToggle();
         if(category.id) {
             axios
-                .put(`/api/spendings/categories/${category.id}`, category)
+                .put(`/api/spendings/categories/${category.id}`, category, {'headers': {'Authorization': 'JWT ' + localStorage.getItem('JWT-Access')}})
 				.then(res => this.refreshList())
-				.catch(console.log)
+				.catch(err => {
+					this.updateAccessToken()
+				})
         } else {
             axios
-                .post(`/api/spendings/categories/`, category)
+                .post(`/api/spendings/categories/`, category, {'headers': {'Authorization': 'JWT ' + localStorage.getItem('JWT-Access')}})
 				.then(res => this.refreshList())
-				.catch(console.log)
+				.catch(err => {
+					this.updateAccessToken()
+				})
         }
     }
 
 	handleDelete = item => {
 		axios
-			.delete(`/api/spendings/expenses/${item.id}`, item)
-			.then(res => this.refreshList());
+			.delete(`/api/spendings/expenses/${item.id}`, item, {'headers': {'Authorization': 'JWT ' + localStorage.getItem('JWT-Access')}})
+			.then(res => this.refreshList())
+			.catch(err => {
+				this.updateAccessToken()
+			})
+	}
+
+	updateAccessToken() {
+		let auth = new Auth()
+
+		auth.refreshAccessToken()
 	}
 
 	createExpense = () => {
